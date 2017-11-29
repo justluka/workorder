@@ -15,7 +15,7 @@ mysql.Promise = global.Promise; //Tell Mysql to use Promisses
 
 
 // Imports all models here
-
+require('./models/Categories');
 
 //start our app
 const app = require('./app');

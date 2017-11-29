@@ -1,26 +1,16 @@
-
 const mysql = require('mysql');
-var db= mysql.createConnection(process.env.DATABASE);
+mysql.Promise - global.Promise;
 
-exports.create = function(userId, text, done) {
-	var values = [userId, text, new Date().toISOString()];
-  
-	db.get().query('INSERT INTO comments (user_id, text, date) VALUES(?, ?, ?)', values, function(err, result) {
-		if (err) return done(err);
-		done(null, result.insertId);
-	});
-};
-
-exports.getAll = function(done) {
-	db.get().query('SELECT * FROM comments', function (err, rows) {
-		if (err) return done(err);
-		done(null, rows);
-	});
-};
-
-exports.getAllByUser = function(userId, done) {
-	db.get().query('SELECT * FROM comments WHERE user_id = ?', userId, function (err, rows) {
-		if (err) return done(err);
-		done(null, rows);
-	});
-};
+const Category={
+	
+   getAllCategories:function(callback){
+	
+      return connection.query("Select * Caterogies task",callback);
+	
+   },
+	getCategoryById:function(id,callback){
+	
+   	return db.query("select * from Categories where Id=?",[id],callback);
+	}
+   };
+	module.exports=  Category;

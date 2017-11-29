@@ -2,10 +2,11 @@
   "name": "workorder",
   "version": "1.0.0",
   "private": true,
+  "main": "main.js",
   "description": "",
   "scripts": {
-    "start": "node ./start.js",
-    "watch": "nodemon ./start.js --ignore public/"ß
+    
+    "watch": "nodemon ./start.js --ignore public/"
   },
   "now": {
     "dotenv": "variables.env.now"
@@ -20,6 +21,7 @@
     "express-validator": "^4.3.0",
     "jwt-js": "^0.5.0",
     "mysql": "^2.15.0",
-    "passport": "^0.4.0"
+    "passport": "^0.4.0",
+    "pug": "^2.0.0-rc.4"
   }
 }
