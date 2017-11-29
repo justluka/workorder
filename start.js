@@ -5,12 +5,12 @@ require('dotenv').config({ path: 'variables.env' });
 
 
 // Connect to our Database 
-var db= mysql.createConnection(process.env.DATABASE);
-db.on('error', (err) => {
-    console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
-    
-  });
+var connection= mysql.createConnection(process.env.DATABASE);
 
+connection.connect(function(err) {
+	if (err) throw err
+	console.log('You are now connected...');
+});
 mysql.Promise = global.Promise; //Tell Mysql to use Promisses
 
 
@@ -21,7 +21,7 @@ mysql.Promise = global.Promise; //Tell Mysql to use Promisses
 const app = require('./app');
 app.set('port', process.env.PORT || 7777);
 const server = app.listen(app.get('port'), () => {
-  console.log(`Express running → PORT ${server.address().port}`);
+	console.log(`Express running → PORT ${server.address().port}`);
 });
 
 
