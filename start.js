@@ -1,27 +1,28 @@
-const mysql = require('mysql');
+var mysql = require('mysql');
+
 
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });
 
 
-// Connect to our Database 
-var connection= mysql.createConnection(process.env.DATABASE);
+//start mysql connection
+var connection = mysql.createConnection(process.env.DATABASE);
+mysql.promise = global.Promise;
 
 connection.connect(function(err) {
-	if (err) throw err
+	if (err) throw err;
 	console.log('You are now connected...');
 });
-mysql.Promise = global.Promise; //Tell Mysql to use Promisses
+//end mysql connection
+ 
 
-
-// Imports all models here
+// import all of our models
 require('./models/Categories');
 
-//start our app
+
+//create app server
 const app = require('./app');
 app.set('port', process.env.PORT || 7777);
 const server = app.listen(app.get('port'), () => {
-	console.log(`Express running → PORT ${server.address().port}`);
+  console.log(`Express running → PORT ${server.address().port}`);
 });
-
-

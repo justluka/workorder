@@ -5,11 +5,11 @@
   "main": "main.js",
   "description": "",
   "scripts": {
-    
+    "start": "node ./start.js",
     "watch": "nodemon ./start.js --ignore public/"
   },
   "now": {
-    "dotenv": "variables.env.now"
+    "dotenv": "variables.env"
   },
   "author": "",
   "license": "ISC",
