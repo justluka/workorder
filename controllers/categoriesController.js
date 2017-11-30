@@ -1,3 +1,10 @@
-const mysql = require('mysql');
+var Category = require('../models/categories');
 
-var db= mysql.createConnection(process.env.DATABASE);
+exports.getCategories =  (req,res) =>{
+ 	Category.getAllCategories(function(err,rows){        
+		if(err)	
+       		res.json(err);
+		else		
+			res.end(JSON.stringify(rows[0]));		       
+	});
+};

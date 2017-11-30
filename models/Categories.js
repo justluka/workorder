@@ -1,16 +1,16 @@
-const mysql = require('mysql');
-mysql.Promise - global.Promise;
+var db = require('../dbConnection');
+
 
 const Category={
 	
-   getAllCategories:function(callback){
-	
-      return connection.query("Select * Caterogies task",callback);
-	
-   },
+	getAllCategories:(callback) =>{
+
+		return  db.query('call sp_getAllCategories()',callback);
+		
+	},
+    
 	getCategoryById:function(id,callback){
-	
-   	return db.query("select * from Categories where Id=?",[id],callback);
+   	    return db.query('select * from Categories where Id=?',[id],callback);
 	}
-   };
-	module.exports=  Category;
+};
+module.exports=  Category;
