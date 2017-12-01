@@ -1,48 +1,34 @@
 var Category = require('../models/Categories');
+var db = require('../dbConnection');	
 
 
-
-exports.getCategories =  (req,res) =>{
- 	Category.getAllCategories((err,rows) => {        
-		if(err)	{
-			res.json(err);
-			return;
-		}	   
-		res.end(JSON.stringify(rows[0]));		       
+exports.getCategories =  (req,res,next) =>{	
+	db.query('call uspGetAllCategories()', (err,rows) => {        	
+		getResults(res,err,rows);	
 	});
+	
 };
 
 exports.getCategoryByID =  (req,res) =>{
-	Category.getCategoryById(req.params.id, (err,rows) =>{        
-		if(err)	{
-			res.json(err);
-			return;
-		}	   
-		res.end(JSON.stringify(rows[0]));		       
+	db.query('call uspGetCategoryByID(?)',req.params.id, (err,rows) =>{        
+		getResults(res,err,rows);		       
    });
+
 };
 
 
 
 exports.createCategory =  (req,res) =>{
-	Category.createCategory(req.body,(err,rows) =>{        
-		if(err)	{
-			res.json(err);
-			return;
-		}	   
-		res.end(JSON.stringify(rows[0]));	   
+	db.query('call uspCreateCategory(?)',[req.body.categoryDescription],(err,rows) =>{        
+		getResults(res,err,rows);	;	   
    });
 };
 
 
 
 exports.updateCategory =  (req,res) =>{
-	Category.updateCategory(req.body, (err,rows) =>{        
-		if(err)	{
-			res.json(err);
-			return;
-		}	   
-		res.end(JSON.stringify(rows[0]));			       
+	db.query('call uspUpdateCategory(?,?)',[req.body.categoryID,req.body.categoryDescription], (err,rows) =>{        
+		getResults(res,err,rows);		       
    });
 
    
@@ -50,10 +36,17 @@ exports.updateCategory =  (req,res) =>{
 
 
 exports.deleteCategory =  (req,res) =>{
-	Category.deleteCategory(req.body,(err,rows) =>{        
-	   if(err)	
-			  res.json(err);
-	   else		
-		   res.end(JSON.stringify(rows.affectedRows));		       
+	db.query('call uspDeleteCategory(?)',[req.body.categoryID],(err,rows) =>{        
+	 getResults(res,err,rows);			       
    });
 };   
+
+
+ function getResults (res, err,result){
+
+	if(!err) 
+		res.end(JSON.stringify({ 'status':200, 'error':null,"response": result}));	
+	else
+		res.send({'status':500, 'error': err});				 		
+	
+}
