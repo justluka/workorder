@@ -1,8 +1,13 @@
 var db = require('../dbConnection');
+var Promise = require("promise");
+
 
 
 const Category={
-	
+	getAll:() =>{
+		
+		return  db.query('call uspGetAllCategories()');		
+	},
 	getAllCategories:(callback) =>{
 		return  db.query('call uspGetAllCategories()',callback);		
 	},
