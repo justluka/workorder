@@ -2,11 +2,19 @@ const express = require('express');
 const router = express.Router();
 const categoriesController = require('../controllers/categoriesController');
 const authenticateController = require('../controllers/authenticateController');
+const awsController = require('../controllers/awsController');
+
 const jwt = require('jsonwebtoken');
 
 
 //Authenticate
 router.post('/authenticate',authenticateController.validateUser);
+
+//aws Controller
+router.get('/aws/sign',awsController.signedRequest);
+router.get('/aws/files',awsController.listFiles);
+router.get('/aws/files/:fileName',awsController.getFileSignedRequest);
+router.delete('/aws/files/:fileName',awsController.deleteFile);
 
 //route middleware to verify a token
 router.use(function(req, res, next) {
