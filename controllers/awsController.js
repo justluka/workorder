@@ -4,7 +4,6 @@ var secrets = require('../secrets');
 const s3 = new aws.S3({
 	signatureVersion: 'v4',
 	region: 'us-east-2',
-	Bucket: 'mnetworkorder'
 });
 
 
