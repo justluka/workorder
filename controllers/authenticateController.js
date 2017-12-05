@@ -8,17 +8,18 @@ exports.validateUser =  (req,res) =>{
 	const payload={
 		user: req.body.userName
 	};
+	
 
 	// Let's see if the user is valid
-	db.query('call uspValidateUser(?,?)',[req.body.userName, req.body.password],(err,rows) =>{        
-
+	db.query('call uspValidateUser(?,?)',[req.body.userName, req.body.password],(err,result) =>{        
+		
 		if(!err) {
 			//if the user is valid create a tokem
-			if(rows[0][0].isValid==1) {
+			if(result[0].length==1) {
+				
 				Token = jwt.sign(payload, process.env.Token, { expiresIn: '24h' });          
 				res.status(200).send({
-					success: true,
-					message: 'Token was created..!',
+					user: result[0][0],
 					token: Token
 				}); 
 			}
@@ -31,7 +32,7 @@ exports.validateUser =  (req,res) =>{
 		}  // End if no error    
 	
 		else {
-			res.status(500).send({ 'status':200, 'error':null,'response': rows});
+			res.status(500).send({ 'status':500, 'error':err});
 		}	
 
 	});
