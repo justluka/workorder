@@ -17,6 +17,7 @@ app.get('*', (req, res)=>{
 	res.status(404).send({'status':404,'err':'Page not found'});
 });
 
+  
 
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());
