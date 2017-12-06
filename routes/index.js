@@ -19,41 +19,41 @@ router.delete('/aws/files/:fileName',awsController.deleteFile);
 
 //route middleware to verify a token
 router.use(function(req, res, next) {
-	if(req.method ==="OPTIONS") res.status(200).send({success:true});
+	if(req.method ==='OPTIONS') res.status(200).send({success:true});
 	var allowedRoutes=['/authenticate'];
 
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if (req.method==='POST' && req.path ===allowedRoutes){
+	if (req.method==='POST' && req.path ===allowedRoutes){
 		next();
 	}
 	else{
 
 		if (token) {
 			
-				// verifies secret and checks exp
-				jwt.verify(token, process.env.Token, function(err, decoded) {      
-					if (err) {
-						return res.json({ success: false, message: 'Failed to authenticate token.' });    
-					} else {
-						// if everything is good, save to request for use in other routes
-						req.decoded = decoded;    
-						next();
-					}
-				});
+			// verifies secret and checks exp
+			jwt.verify(token, process.env.Token, function(err, decoded) {      
+				if (err) {
+					return res.json({ success: false, message: 'Failed to authenticate token.' });    
+				} else {
+					// if everything is good, save to request for use in other routes
+					req.decoded = decoded;    
+					next();
+				}
+			});
 			
-			} else {
+		} else {
 			
-				// if there is no token
-				// return an error
-				return res.status(403).send({ 
-					success: false, 
-					message: 'No token provided.' ,
-					path: req.path,
-					method: req.method
-				});
+			// if there is no token
+			// return an error
+			return res.status(403).send({ 
+				success: false, 
+				message: 'No token provided.' ,
+				path: req.path,
+				method: req.method
+			});
 			
-			}
+		}
 
 
 	}

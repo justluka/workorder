@@ -24,7 +24,7 @@ exports.validateUser =  (req,res) =>{
 				}); 
 			}
 			else{
-				res.status(500).send({
+				res.status(200).send({
 					success: false,
 					message: 'User/password Invalid..!'
 				}); 	
