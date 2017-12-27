@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const categoriesController = require('../controllers/categoriesController');
+const workOrderController = require('../controllers/workOrderController');
 const authenticateController = require('../controllers/authenticateController');
 const awsController = require('../controllers/awsController');
 
@@ -60,6 +61,17 @@ router.use(function(req, res, next) {
 	// decode token
 	
 });
+
+//rest api managing workorders
+router.get('/workorders', workOrderController.getWorkOrders);
+router.get('/workorders/:id', workOrderController.getWorkOrderByID);
+router.get('/workordersByCategory/:id', workOrderController.getWorkOrdersByCategory);
+router.post('/workorder/add', workOrderController.createWorkOrder);
+router.put('/workorder/edit', workOrderController.updateWorkOrder);
+router.delete('/workorder/delete', workOrderController.deleteWorkOrder);
+
+
+
 
 //rest api to get all results for categories
 router.get('/categories',categoriesController.getCategories);
