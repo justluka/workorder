@@ -53,7 +53,7 @@ exports.deleteWorkOrder =  (req,res) =>{
 function getResults (res, err,result){
 
 	if(!err) 
-		res.status(200).send({ 'status':200, 'error':null,'response': result});
+		res.status(200).send({ 'status':200, 'error':null,'response': result[0]});
 	else
 		res.status(500).send({'status':500, 'error': err});				 		
 	
