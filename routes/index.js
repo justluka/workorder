@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const categoriesController = require('../controllers/categoriesController');
+const statusController = require('../controllers/statusController');
 const workOrderController = require('../controllers/workOrderController');
 const authenticateController = require('../controllers/authenticateController');
 const awsController = require('../controllers/awsController');
@@ -80,6 +81,15 @@ router.post('/categories/add', categoriesController.createCategory);
 router.put('/categories/edit', categoriesController.updateCategory);
 router.delete('/categories/delete', categoriesController.deleteCategory);
 
+
+
+
+//rest api to get all results for status
+router.get('/status',statusController.getStatus);
+router.get('/status/:id', statusController.getStatusByID);
+router.post('/status/add', statusController.createStatus);
+router.put('/status/edit', statusController.updateStatus);
+router.delete('/status/delete', statusController.deleteStatus);
 
 module.exports = router;
 

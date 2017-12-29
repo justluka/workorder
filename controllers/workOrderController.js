@@ -27,7 +27,22 @@ exports.getWorkOrderByID =  (req,res) =>{
 
 
 exports.createWorkOrder=  (req,res) =>{
-	db.query('call uspCreateWorkOrder(?)',[req.body.categoryDescription],(err,rows) =>{        
+	db.query('call uspCreateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.workorder.category,
+																	1,
+																	req.body.workorder.status,
+																	req.body.workorder.description,
+																	req.body.workorder.propouseHours,
+																	req.body.workorder.actualHours,
+																	req.body.workorder.document,
+																	req.body.workorder.signedDate,
+																	req.body.workorder.startedDate,
+																	req.body.workorder.completedDate,
+																	req.body.workorder.releasedTestDate,
+																	req.body.workorder.releasedProductionDate,
+																	req.body.workorder.notes,
+																	req.body.workorder.lastUpdateByUser],																	
+																	
+	(err,rows) =>{        
 		getResults(res,err,rows);	   
 	});
 };
