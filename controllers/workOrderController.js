@@ -9,16 +9,27 @@ exports.getWorkOrders =  (req,res) =>{
 };
 
 
-exports.getWorkOrdersByCategory =  (req,res) =>{	
-	db.query('call uspGetWorkOrdersByCategory()', (err,rows) => {        	
-		getResults(res,err,rows);	
+exports.getWorkOrderByID =  (req,res) =>{
+
+	db.query('call uspGetWorkOrderByID(?)',[req.params.id ], (err,rows) =>{        
+		getResults(res,err,rows);		       
 	});
-	
+
 };
 
 
-exports.getWorkOrderByID =  (req,res) =>{
-	db.query('call uspGetWorkOrderByID(?)',req.params.id, (err,rows) =>{        
+exports.getWorkOrdersByCategory =  (req,res) =>{
+
+	db.query('call uspGetWorkOrdersByCategory(?)',[req.params.id ], (err,rows) =>{        
+		getResults(res,err,rows);		       
+	});
+
+};
+
+
+exports.getResourcesByWorkOrder =  (req,res) =>{
+
+	db.query('call uspGetResourcesByWorkOrderID(?)',[req.params.id ], (err,rows) =>{        
 		getResults(res,err,rows);		       
 	});
 
@@ -26,21 +37,41 @@ exports.getWorkOrderByID =  (req,res) =>{
 
 
 
+exports.deleteResourcesByWorkOrder =  (req,res) =>{
+	db.query('call uspDeleteResourcesByWorkOrderID(?)',[req.params.id], 
+		(err,rows) =>{        
+			getResults(res,err,rows);		       
+		});
+
+};
+
+
 exports.createWorkOrder=  (req,res) =>{
-	db.query('call uspCreateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.workorder.category,
-																	1,
-																	req.body.workorder.status,
-																	req.body.workorder.description,
-																	req.body.workorder.propouseHours,
-																	req.body.workorder.actualHours,
-																	req.body.workorder.document,
-																	req.body.workorder.signedDate,
-																	req.body.workorder.startedDate,
-																	req.body.workorder.completedDate,
-																	req.body.workorder.releasedTestDate,
-																	req.body.workorder.releasedProductionDate,
-																	req.body.workorder.notes,
-																	req.body.workorder.lastUpdateByUser],																	
+
+	db.query('call uspCreateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.category,
+		1,
+		req.body.status,
+		req.body.description,
+		req.body.propouseHours,
+		req.body.actualHours,
+		req.body.document,
+		req.body.signedUrl,
+		req.body.signedDate,
+		req.body.startedDate,
+		req.body.completedDate,
+		req.body.releasedTestDate,
+		req.body.releasedProductionDate,
+		req.body.notes,
+		req.body.lastUpdateByUser],																	
+																	
+	(err,rows) =>{        
+		getResults(res,err,rows);	   
+	});
+};
+
+exports.addResources=  (req,res) =>{
+	db.query('call uspAddResources(?,?)',[req.body.WorkOrderID,
+		req.body.UserName],																	
 																	
 	(err,rows) =>{        
 		getResults(res,err,rows);	   
@@ -50,16 +81,32 @@ exports.createWorkOrder=  (req,res) =>{
 
 
 exports.updateWorkOrder =  (req,res) =>{
-	db.query('call uspUpdateWorkOrder(?,?)',[req.body.categoryID,req.body.categoryDescription], (err,rows) =>{        
-		getResults(res,err,rows);		       
+	db.query('call uspUpdateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[
+		req.body.workOrderID,
+		req.body.category,
+		req.body.status,
+		req.body.description,
+		req.body.propouseHours,
+		req.body.actualHours,
+		req.body.document,
+		req.body.signedUrl,
+		req.body.signedDate,
+		req.body.startedDate,
+		req.body.completedDate,
+		req.body.releasedTestDate,
+		req.body.releasedProductionDate,
+		req.body.notes,
+		req.body.lastUpdateByUser],																	
+																	
+	(err,rows) =>{        
+		getResults(res,err,rows);	   
 	});
-
    
 };
 
 
 exports.deleteWorkOrder =  (req,res) =>{
-	db.query('call uspDeleteWorkOrder(?)',[req.body.categoryID],(err,rows) =>{        
+	db.query('call uspDeleteWorkOrder(?)',[req.params.id],(err,rows) =>{        
 		getResults(res,err,rows);			       
 	});
 };   

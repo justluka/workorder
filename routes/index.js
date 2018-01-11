@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const categoriesController = require('../controllers/categoriesController');
 const statusController = require('../controllers/statusController');
+const usersController = require('../controllers/usersController');
 const workOrderController = require('../controllers/workOrderController');
 const authenticateController = require('../controllers/authenticateController');
 const awsController = require('../controllers/awsController');
@@ -15,8 +16,8 @@ router.post('/authenticate',authenticateController.validateUser);
 //aws Controller
 router.get('/aws/sign',awsController.signedRequest);
 router.get('/aws/files',awsController.listFiles);
-router.get('/aws/files/:fileName',awsController.getFileSignedRequest);
-router.delete('/aws/files/:fileName',awsController.deleteFile);
+router.get('/aws/getFile',awsController.getFileSignedRequest);
+router.delete('/aws/delete',awsController.deleteFile);
 
 
 //route middleware to verify a token
@@ -26,7 +27,7 @@ router.use(function(req, res, next) {
 
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	if (req.method==='POST' && req.path ===allowedRoutes){
+	if ( (req.method==='POST' || req.method==='PUT' || req.method==='GET') && req.path ===allowedRoutes){
 		next();
 	}
 	else{
@@ -59,23 +60,34 @@ router.use(function(req, res, next) {
 
 
 	}
-	// decode token
+	// decode tokenxs
 	
 });
 
 //rest api managing workorders
 router.get('/workorders', workOrderController.getWorkOrders);
 router.get('/workorders/:id', workOrderController.getWorkOrderByID);
-router.get('/workordersByCategory/:id', workOrderController.getWorkOrdersByCategory);
-router.post('/workorder/add', workOrderController.createWorkOrder);
-router.put('/workorder/edit', workOrderController.updateWorkOrder);
-router.delete('/workorder/delete', workOrderController.deleteWorkOrder);
+router.get('/workorders/ByCategory/:id', workOrderController.getWorkOrdersByCategory);
+router.get('/workorder/getResources/:id', workOrderController.getResourcesByWorkOrder);
 
+router.post('/workorder/add', workOrderController.createWorkOrder);
+router.post('/workorder/addResources', workOrderController.addResources);
+router.put('/workorder/edit', workOrderController.updateWorkOrder);
+router.delete('/workorder/delete/:id', workOrderController.deleteWorkOrder);
+router.delete('/workorder/deleteResources/:id', workOrderController.deleteResourcesByWorkOrder);					  
+
+//rest api to get all results for categories
+router.get('/users', usersController.getAllUsers);
+router.get('/users/:id', usersController.getUserByID);
+router.post('/users/add', usersController.createUser);
+router.put('/users/edit', usersController.updateUser);
+router.delete('/users/delete', usersController.deleteUser);
 
 
 
 //rest api to get all results for categories
 router.get('/categories',categoriesController.getCategories);
+router.get('/categories/workorders',categoriesController.getCategoriesWithWO);
 router.get('/categories/:id', categoriesController.getCategoryByID);
 router.post('/categories/add', categoriesController.createCategory);
 router.put('/categories/edit', categoriesController.updateCategory);

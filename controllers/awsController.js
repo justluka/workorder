@@ -1,4 +1,6 @@
 const aws = require('aws-sdk');
+const request = require('request');
+const fs = require('fs');
 var secrets = require('../secrets');
 
 const s3 = new aws.S3({
@@ -15,7 +17,6 @@ exports.signedRequest= (req,res) =>{
 	const s3Params={
 		Bucket: secrets.aws_bucket,
 		Key: fileName,
-		Expires: 60,
 		ContentType: fileType,
 		ACL:'private' //Access Control,
 	};
@@ -34,21 +35,18 @@ exports.signedRequest= (req,res) =>{
 	});
 };
 
-
 exports.getFileSignedRequest= (req,res) =>{
 	const s3Params={
 		Bucket: secrets.aws_bucket,
-		Key: req.params.fileName,
-		Expire:60
+		Key: req.query['fileName'],
         
 	};
     
 	s3.getSignedUrl('getObject', s3Params, (err,data)=>{
 		if(err){
-			console.log(err);
 			return res.end();
 		}
-		return res.json(data);
+		res.status(200).send({ 'status':200, 'error':null,'response': data});
 	});
 };
 
@@ -61,11 +59,10 @@ exports.listFiles= (req,res) =>{
     
 	s3.listObjects(s3Params, (err,data)=>{
 		if(err){
-			console.log(err);
 			return res.end();
 		}
         
-		return res.json(data);
+		res.status(200).send({ 'status':200, 'error':null,'response': data});
 	});
 };
 
@@ -73,13 +70,12 @@ exports.listFiles= (req,res) =>{
 exports.deleteFile= (req,res) =>{
 	const s3Params={
 		Bucket: secrets.aws_bucket,
-		Key: req.params.fileName
+		Key: req.query['fileName']
 	};
     
 	s3.deleteObject(s3Params, (err,data)=>{
 		if(err){
-			console.log(err);
-			return res.end();
+			return res.status(200).send({'msg':'File Cagada.' });
 		}
         
 		return res.status(200).send({'msg':'File Deleted.' });

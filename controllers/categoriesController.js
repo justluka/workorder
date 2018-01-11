@@ -8,6 +8,13 @@ exports.getCategories =  (req,res) =>{
 	
 };
 
+exports.getCategoriesWithWO =  (req,res) =>{	
+	db.query('call uspGetAllCategoriesWithWo()', (err,rows) => {        	
+		getResults(res,err,rows);	
+	});
+	
+};
+
 exports.getCategoryByID =  (req,res) =>{
 	db.query('call uspGetCategoryByID(?)',req.params.id, (err,rows) =>{        
 		getResults(res,err,rows);		       
