@@ -73,6 +73,8 @@ router.get('/workorder/getResources/:id', workOrderController.getResourcesByWork
 router.post('/workorder/add', workOrderController.createWorkOrder);
 router.post('/workorder/addResources', workOrderController.addResources);
 router.put('/workorder/edit', workOrderController.updateWorkOrder);
+router.put('/workorder/editPriority', workOrderController.updateWorkOrderPriority);
+router.put('/workorder/archive', workOrderController.archiveWorkOrder);
 router.delete('/workorder/delete/:id', workOrderController.deleteWorkOrder);
 router.delete('/workorder/deleteResources/:id', workOrderController.deleteResourcesByWorkOrder);					  
 

@@ -48,9 +48,10 @@ exports.deleteResourcesByWorkOrder =  (req,res) =>{
 
 exports.createWorkOrder=  (req,res) =>{
 
-	db.query('call uspCreateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.category,
+	db.query('call uspCreateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.category,
 		1,
 		req.body.status,
+		req.body.title,
 		req.body.description,
 		req.body.propouseHours,
 		req.body.actualHours,
@@ -81,10 +82,11 @@ exports.addResources=  (req,res) =>{
 
 
 exports.updateWorkOrder =  (req,res) =>{
-	db.query('call uspUpdateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[
+	db.query('call uspUpdateWorkOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[
 		req.body.workOrderID,
 		req.body.category,
 		req.body.status,
+		req.body.title,
 		req.body.description,
 		req.body.propouseHours,
 		req.body.actualHours,
@@ -97,6 +99,30 @@ exports.updateWorkOrder =  (req,res) =>{
 		req.body.releasedProductionDate,
 		req.body.notes,
 		req.body.lastUpdateByUser],																	
+																	
+	(err,rows) =>{        
+		getResults(res,err,rows);	   
+	});
+   
+};
+
+
+
+exports.updateWorkOrderPriority =  (req,res) =>{
+	db.query('call uspUpdateWorkOrderPriority(?,?)',[
+		req.body.WorkOrderID,
+		req.body.Priority],																	
+																	
+	(err,rows) =>{        
+		getResults(res,err,rows);	   
+	});
+   
+};
+
+
+exports.archiveWorkOrder =  (req,res) =>{
+	db.query('call uspArchiveWorkOrder(?)',[
+		req.body.WorkOrderID],																	
 																	
 	(err,rows) =>{        
 		getResults(res,err,rows);	   
