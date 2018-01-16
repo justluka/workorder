@@ -66,15 +66,18 @@ router.use(function(req, res, next) {
 
 //rest api managing workorders
 router.get('/workorders', workOrderController.getWorkOrders);
+router.get('/workorders/getArchived', workOrderController.getArchivedWorkOrders);
 router.get('/workorders/:id', workOrderController.getWorkOrderByID);
 router.get('/workorders/ByCategory/:id', workOrderController.getWorkOrdersByCategory);
 router.get('/workorder/getResources/:id', workOrderController.getResourcesByWorkOrder);
+router.get('/workorders/myOrders/:id', workOrderController.getWorkOrderByUser);
 
 router.post('/workorder/add', workOrderController.createWorkOrder);
 router.post('/workorder/addResources', workOrderController.addResources);
 router.put('/workorder/edit', workOrderController.updateWorkOrder);
 router.put('/workorder/editPriority', workOrderController.updateWorkOrderPriority);
 router.put('/workorder/archive', workOrderController.archiveWorkOrder);
+router.put('/workorder/activate', workOrderController.activateWorkOrder);
 router.delete('/workorder/delete/:id', workOrderController.deleteWorkOrder);
 router.delete('/workorder/deleteResources/:id', workOrderController.deleteResourcesByWorkOrder);					  
 

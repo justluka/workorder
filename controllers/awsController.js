@@ -1,6 +1,4 @@
 const aws = require('aws-sdk');
-const request = require('request');
-const fs = require('fs');
 var secrets = require('../secrets');
 
 const s3 = new aws.S3({

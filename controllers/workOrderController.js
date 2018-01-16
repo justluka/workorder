@@ -9,9 +9,26 @@ exports.getWorkOrders =  (req,res) =>{
 };
 
 
+exports.getArchivedWorkOrders =  (req,res) =>{	
+	db.query('call uspGetAllArchivedWorkOrders()', (err,rows) => {        	
+		getResults(res,err,rows);	
+	});
+	
+};
+
+
 exports.getWorkOrderByID =  (req,res) =>{
 
 	db.query('call uspGetWorkOrderByID(?)',[req.params.id ], (err,rows) =>{        
+		getResults(res,err,rows);		       
+	});
+
+};
+
+
+exports.getWorkOrderByUser =  (req,res) =>{
+
+	db.query('call uspGetWorkOrdersByUser(?)',[req.params.id ], (err,rows) =>{        
 		getResults(res,err,rows);		       
 	});
 
@@ -130,6 +147,15 @@ exports.archiveWorkOrder =  (req,res) =>{
    
 };
 
+exports.activateWorkOrder =  (req,res) =>{
+	db.query('call uspActivateWorkOrder(?)',[
+		req.body.WorkOrderID],																	
+																	
+	(err,rows) =>{        
+		getResults(res,err,rows);	   
+	});
+   
+};
 
 exports.deleteWorkOrder =  (req,res) =>{
 	db.query('call uspDeleteWorkOrder(?)',[req.params.id],(err,rows) =>{        
