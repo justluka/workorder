@@ -8,6 +8,13 @@ exports.getWorkOrders =  (req,res) =>{
 	
 };
 
+exports.getAllWorkOrdersByStatus =  (req,res) =>{	
+	db.query('call uspGetAllWorkOrdersByStatus()', (err,rows) => {        	
+		getResults(res,err,rows);	
+	});
+	
+};
+
 
 exports.getArchivedWorkOrders =  (req,res) =>{	
 	db.query('call uspGetAllArchivedWorkOrders()', (err,rows) => {        	

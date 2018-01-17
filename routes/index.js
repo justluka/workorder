@@ -69,6 +69,8 @@ router.get('/workorders', workOrderController.getWorkOrders);
 router.get('/workorders/getArchived', workOrderController.getArchivedWorkOrders);
 router.get('/workorders/:id', workOrderController.getWorkOrderByID);
 router.get('/workorders/ByCategory/:id', workOrderController.getWorkOrdersByCategory);
+router.get('/ByStatus/', workOrderController.getAllWorkOrdersByStatus);
+
 router.get('/workorder/getResources/:id', workOrderController.getResourcesByWorkOrder);
 router.get('/workorders/myOrders/:id', workOrderController.getWorkOrderByUser);
 
